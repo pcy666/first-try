@@ -29,5 +29,6 @@ def dbinsert(table,value):
     except:
         conn.rollback()
 
-dbinsert('clients',('1232421','18856789876'))
-print(dbsearch('clients','id','1232421'))
+for i in range(222,252):
+    data = (i,470,0,'双人间')
+    dbinsert('room',data)

@@ -21,7 +21,7 @@ def signin():
     way = request.values.get('options')
 
     if pwd == db.dbsearch('staff','id',uname)[0][1]:  #判断是否和数据库中的密码一致
-        return render_template('aftersignin.html',name = uname,pwd = pwd,way = way)
+        return render_template('aftersignin.html')
     else:
         return render_template('index.html')
 
