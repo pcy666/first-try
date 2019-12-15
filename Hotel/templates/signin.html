@@ -5,32 +5,230 @@
     <title>登录系统</title>
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">  
-    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    {{ url_for('static', filename='css/bootstrap.min.css') }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">  
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.12.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <style type="text/css">
+        .divhide{display:none}
+    
+        input[type="checkbox"] {
+            display: none;
+        }
+        input[type="checkbox"]+span {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            font-size: 30px;
+            line-height:50px;
+            text-align: center;
+            border: 1px solid #999;
+            background-color: #fff;
+        }
+        input[type="checkbox"]:checked+span {
+            border: 1px solid rgb(0, 0, 0);
+            background-color: rgb(16, 133, 211);
+        }
+    </style>
 </head>
 <body>
-    <div class="modal-body">
-        <h4 class="modal-title" align="center">登录框</h4>
-        <br/>
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="name" class="col-sm-offset-2 col-sm-2 control-label">账号</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="name" placeholder="请输您的入账号">
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Hotel</a>
+                    </div>
+                    
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                 <a href="#" id="movein">入住</a>
+                            </li>
+                            <li>
+                                 <a href="#">Link</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                 <a href="#">退出系统</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </nav>
+                <div class="jumbotron" id="room" style="display:block;">
+                    <h3>
+                        当前房间情况:
+                    </h3>
+                    <p>
+                        单人房:??
+                        双人房:??
+                        豪华房:??
+                        套间:??
+                        高级套间:??
+                        总统套房:??
+                    </p>
+                </div>
+                <div class="right-block" style="width:0px;display: none;" id="choose">
+                    <div class="dropdown">
+                        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">请选择房间类型
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="single_">单人间</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="double_">双人间</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="luxury_">豪华间</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="suite_">套间</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="high_">高级套间</a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="#" id="president_">总统套房</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+                <div class="jumbotron" id="single" style="display: none;">
+                    <div>
+                        <p>可用单人房</p>
+                        <label><input type="checkbox" name="test"/><span>5041</span></label>
+                        <label><input type="checkbox" name="test" /><span>5051</span></label>
+                        <!-- {{single}} -->
+                    </div>
+                </div>
+                <div class="jumbotron" id="double" style="display: none;">
+                    <div>
+                        <label><input type="checkbox" name="test"/><span>5042</span></label>
+                        <label><input type="checkbox" name="test" /><span>5052</span></label>
+                        <!-- {{single}} -->
+                    </div>
+                </div>
+                <div class="jumbotron" id="luxury" style="display: none;">
+                    <div>
+                        <label><input type="checkbox" name="test"/><span>5043</span></label>
+                        <label><input type="checkbox" name="test" /><span>5053</span></label>
+                        <!-- {{single}} -->
+                    </div>
+                </div>
+                <div class="jumbotron" id="suite" style="display: none;">
+                    <div>
+                        <label><input type="checkbox" name="test"/><span>5044</span></label>
+                        <label><input type="checkbox" name="test" /><span>5054</span></label>
+                        <!-- {{single}} -->
+                    </div>
+                </div>
+                <div class="jumbotron" id="high" style="display: none;">
+                    <div>
+                        <label><input type="checkbox" name="test"/><span>5045</span></label>
+                        <label><input type="checkbox" name="test" /><span>5055</span></label>
+                        <!-- {{single}} -->
+                    </div>
+                </div>
+                <div class="jumbotron" id="president" style="display: none;">
+                    <div>
+                        <label><input type="checkbox" name="test"/><span>5046</span></label>
+                        <label><input type="checkbox" name="test" /><span>5056</span></label>
+                        <!-- {{single}} -->
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password" class="col-sm-offset-2 col-sm-2 control-label">密码</label>
-                <div class="col-sm-5">
-                    <input type="password" class="form-control" id="password" placeholder="请输入您的密码">
+        </div>
+    </div>
+    <div class="modal fade" id="movein_">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                        <h4 class="modal-title" align="center">入住登记</h4>
+                        <br/>
+                        <form class="form-horizontal" role="form" action="/ChooseRoom" method="post" target="_blank">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-offset-2 col-sm-2 control-label">姓名</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="guest_name" placeholder="输入姓名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-offset-2 col-sm-2 control-label">身份证号</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="guest_id" placeholder="输入身份证">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-offset-2 col-sm-2 control-label">联系方式</label>
+                                <div class="col-sm-5">
+                                    <input type="password" class="form-control" id="guest_num" placeholder="输入手机号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-5">
+                                    <button id="form_gusetinfo" type="submit" class="btn btn-default btn-block btn-primary">录入</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <div class="modal-footer">
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-5">
-                    <button id="submitBtn" type="submit" class="btn btn-default btn-primary">登录</button>
-                </div>
-            </div>
-        </form>
-</div>
+            <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript">
+        $(function(){
+        
+            $("#movein").click(function(){
+                $('#movein_').modal('show'); //显示模态框
+            })
+            
+            $("#form_gusetinfo").click(function(){
+                $('#movein_').modal('hide'); //隐藏模态框
+                $('.jumbotron').hide();
+                $('#choose').show();
+            })
+            
+            $("#single_").click(function(){
+                $('#movein_').modal('hide'); 
+                $('.jumbotron').hide();
+                $('#single').show();
+                $('#dropdownMenu1')
+            })
+
+            $("#double_").click(function(){
+                $('#movein_').modal('hide'); 
+                $('.jumbotron').hide();
+                $('#double').show();
+            })
+
+            $("#luxury_").click(function(){
+                $('#movein_').modal('hide'); 
+                $('.jumbotron').hide();
+                $('#luxury').show();
+            })
+
+            $("#high_").click(function(){
+                $('#movein_').modal('hide'); 
+                $('.jumbotron').hide();
+                $('#high').show();
+            })
+
+            $("#president_").click(function(){
+                $('#movein_').modal('hide'); 
+                $('.jumbotron').hide();
+                $('#president').show();
+            })
+        });
+    </script>
 </body>
+

@@ -21,9 +21,13 @@ def signin():
     way = request.values.get('options')
 
     if pwd == db.dbsearch('staff','id',uname)[0][1]:  #判断是否和数据库中的密码一致
-        return render_template('aftersignin.html')
+        return render_template('signin.html')
     else:
         return render_template('index.html')
+
+@app.route('/ChooseRoom',methods=['POST'])
+def ChooseRoom():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
