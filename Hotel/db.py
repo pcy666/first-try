@@ -29,6 +29,5 @@ def dbinsert(table,value):
     except:
         conn.rollback()
 
-for i in range(222,252):
-    data = (i,470,0,'双人间')
-    dbinsert('room',data)
+if __name__ == "__main__":
+    print('111')

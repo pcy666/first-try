@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<head>
+    <title>登录系统</title>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">  
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.12.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <style type="text/css">
+        .divhide{display:none}
+    
+        input[type="checkbox"] {
+            display: none;
+        }
+        input[type="checkbox"]+span {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            font-size: 30px;
+            line-height:50px;
+            text-align: center;
+            border: 1px solid #999;
+            background-color: #fff;
+        }
+        input[type="checkbox"]:checked+span {
+            border: 1px solid rgb(0, 0, 0);
+            background-color: rgb(16, 133, 211);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#" id="init">Admin</a>
+                    </div>
+                    
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                 <a href="#" id="Price">更改房间价格</a>
+                            </li>
+                            <li>
+                                 <a href="#" id="Staff">管理员工账号</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                 <a href="#">退出系统</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </nav>
+
+                <!-- <div class="jumbotron" id="Price_" style="display: none;">
+                    <button id="singleprice" class="btn btn-primary">单人房价格</button>
+                    <button id="doubleprice" class="btn btn-primary">双人房价格</button>
+                    <button id="luxuryprice" class="btn btn-primary">豪华房价格</button>
+                    <button id="suiteprice" class="btn btn-primary">套间价格</button>
+                    <button id="highprice" class="btn btn-primary">高级套间价格</button>
+                    <button id="presidentprice" class="btn btn-primary">总统套房价格</button>
+                </div> -->
+
+                <div class="jumbotron" id="Price_" style="display: none;">
+                    <table class="table table-striped">
+                        <caption>房间价格表</caption>
+                        <thead>
+                            <tr>
+                                <th>房间类型</th>
+                                <th>当前价格</th>
+                                <th>更改价格</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>单人房</td>
+                                <td>{{Single}}</td>
+                                <td><a class='change' name="1" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                            <tr>
+                                <td>双人房</td>
+                                <td>{{double}}</td>
+                                <td><a class='change' name="2" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                            <tr>
+                                <td>豪华房</td>
+                                <td>{{luxury}}</td>
+                                <td><a class='change' name="3" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                            <tr>
+                                <td>套间</td>
+                                <td>{{suite}}</td>
+                                <td><a class='change' name="4" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                            <tr>
+                                <td>高级套间</td>
+                                <td>{{high}}</td>
+                                <td><a class='change' name="5" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                            <tr>
+                                <td>总统套房</td>
+                                <td>{{president}}</td>
+                                <td><a class='change' name="6" onclick="ChangePrice(this)">更改价格</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="changeprice" style="display: none;">
+                        <input id="newprice">
+                        <button onclick="uploadprice()">提交新价格</button>
+                    </div>
+                </div>
+                <input id="num" name="num" style="display: none;">
+                    <!-- 表示要操作的ID数 -->
+                    <input id="type" name="type" style="display: none;">
+                    <!-- 表示操作方式：1是价格操作 2是账号操作 -->
+                <div class="jumbotron" id="Staff_" style="display: none;">
+                    <table class="table table-striped">
+                        <caption>员工账号</caption>
+                        <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>密码</th>
+                                <th>管理</th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>{{ZhangHao}}</td>
+                                    <td>{{Mima}}</td>
+                                    <td><a class='del' name="1" onclick="DelKey(this)">删除账号</a>/<a class='change' name="1" onclick="ChangeKey(this)">修改密码</a></td>
+                                </tr>
+                            </tbody>
+                        </thead>
+                    </table>
+                    <a onclick="Add()">添加账户</a>
+                    <div id="Add_" style="display: none;">
+                            <lable>账号</lable>
+                            <input id="uname">
+                            <label>密码</label>
+                            <input id="psw" type="password">
+                            <button onclick="userupload()">提交</button>
+                    </div>
+                    <div id="changekey" style="display: none;">
+                            <input id="newkey" type="password">
+                            <button onclick="keyupload()">提交</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#Price").click(function(){
+            $('.jumbotron').hide(); 
+            $('#Price_').show();  
+        })
+
+        $("#Staff").click(function(){
+            $('.jumbotron').hide(); 
+            $('#Staff_').show();  
+        })
+
+        function ChangePrice(that){
+            $('#changeprice').show(); 
+            $("#type").attr("value",1)
+            $("#num").attr("value",$(that).attr("name"))
+            // alert($("#num").attr("value"))
+            // alert($("#type").attr("value"))
+        }
+
+        function ChangeKey(that){
+            $('#changekey').show(); 
+            $("#type").attr("value",2)
+            $("#num").attr("value",$(that).attr("name"))
+            // alert($("#num").attr("value"))
+            // alert($("#type").attr("value"))
+        }
+
+        function DelKey(that){
+            $.post("/admin",
+            {
+            type:"3",
+            num:$(that).attr("name")
+            });
+            alter("3")
+
+        }
+
+        function uploadprice(){
+            var type=$("#type").val();
+            var num=$("#num").val();
+            var price=$("#newprice").val();
+            $.ajax({
+                url:"/admin",
+                type:"post",
+                dataType:"json",
+                data:{type:type,num:num,price:price}
+                });
+            // alert($("#num").attr("value"))
+            // alert($("#type").attr("value"))
+        }
+
+        function keyupload(){
+            var type=$("#type").val();
+            var num=$("#num").val();
+            var newkey=$("#newkey").val();
+            $.ajax({
+                url:"/admin",
+                type:"post",
+                dataType:"json",
+                data:{type:type,num:num,newkey:newkey}
+                });
+            // alert($("#num").attr("value"))
+            // alert($("#type").attr("value"))
+        }
+
+        function userupload(){
+            var type=$("#type").val();
+            var uname=$("#uname").val();
+            var psw=$("#psw").val();
+            $.ajax({
+                url:"/admin",
+                type:"post",
+                dataType:"json",
+                data:{type:type,uname:uname,psw:psw}
+                });
+            // alert($("#num").attr("value"))
+            // alert($("#type").attr("value"))
+        }
+
+        function Add(){
+            $('#Add_').show();
+            $("#type").attr("value",4)
+        }
+    </script>
+    
+</body>
+
