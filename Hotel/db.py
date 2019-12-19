@@ -30,4 +30,5 @@ def dbinsert(table,value):
         conn.rollback()
 
 if __name__ == "__main__":
-    print('111')
+    data = "('601','6000','0','总统套房')"
+    dbinsert('room',data)

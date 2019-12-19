@@ -99,44 +99,55 @@
                 <br/>
                 <div class="jumbotron" id="single" style="display: none;">
                     <div>
-                        <p>可用单人房</p>
-                        <label><input type="checkbox" name="test"/><span>5041</span></label>
-                        <label><input type="checkbox" name="test" /><span>5051</span></label>
+                        <p>可用单人间</p>
+                        {% for index in single %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
                 <div class="jumbotron" id="double" style="display: none;">
                     <div>
-                        <label><input type="checkbox" name="test"/><span>5042</span></label>
-                        <label><input type="checkbox" name="test" /><span>5052</span></label>
+                        <p>可用双人间</p>
+                        {% for index in double %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
                 <div class="jumbotron" id="luxury" style="display: none;">
                     <div>
-                        <label><input type="checkbox" name="test"/><span>5043</span></label>
-                        <label><input type="checkbox" name="test" /><span>5053</span></label>
+                        <p>可用豪华间</p>
+                        {% for index in luxury %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
                 <div class="jumbotron" id="suite" style="display: none;">
                     <div>
-                        <label><input type="checkbox" name="test"/><span>5044</span></label>
-                        <label><input type="checkbox" name="test" /><span>5054</span></label>
+                        <p>可用套间</p>
+                        {% for index in suite %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
                 <div class="jumbotron" id="high" style="display: none;">
                     <div>
-                        <label><input type="checkbox" name="test"/><span>5045</span></label>
-                        <label><input type="checkbox" name="test" /><span>5055</span></label>
+                        <p>可用高级套间</p>
+                        {% for index in high %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
                 <div class="jumbotron" id="president" style="display: none;">
                     <div>
-                        <label><input type="checkbox" name="test"/><span>5046</span></label>
-                        <label><input type="checkbox" name="test" /><span>5056</span></label>
+                        <p>可用总统套房</p>
+                        {% for index in president %}
+                            <label><input type="checkbox" name="test"/><span>{{index}}</span></label>
+                        {% endfor %}
                         <!-- {{single}} -->
                     </div>
                 </div>
