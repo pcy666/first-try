@@ -36,7 +36,7 @@
             <div class="col-md-12 column">
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">
-                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#" id="init">Hotel</a>
+                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/signin">Hotel</a>
                     </div>
                     
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -59,9 +59,9 @@
                                 </ul>
                             </li>
                         </ul>
-                    </div>
+                    
                 </nav>
-                <div class="jumbotron" id="room" style="display:none;">
+                <div class="jumbotron" id="room" style="display:block;">
                     <h3>
                         当前房间情况:
                     </h3>
@@ -107,7 +107,7 @@
                     <button id="checkout_upload" class="btn btn-default">确认</button>
                 </div>
 
-                <div class="right-block" style="width:0px;display: block;" id="choose">
+                <div class="right-block" style="width:0px;display: none;" id="choose">
                     <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">请选择房间类型
                             <span class="caret"></span>
@@ -198,6 +198,9 @@
             </div>
         </div>
     </div>
+
+    <!-- <input name="status" value="2" style="display: none;"> -->
+    
     <div class="modal fade" id="movein_">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -207,28 +210,28 @@
                 <div class="modal-body">
                         <h4 class="modal-title" align="center">入住登记</h4>
                         <br/>
-                        <form class="form-horizontal" role="form" method="post">
+                        <form class="form-horizontal" role="form"  method="post">
                             <div class="form-group">
-                                <label for="name" class="col-sm-offset-2 col-sm-2 control-label">姓名</label>
+                                <label for="guest_name" class="col-sm-offset-2 col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="guest_name" placeholder="输入姓名">
+                                    <input type="text" class="form-control" id="guest_name"  placeholder="输入姓名">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="name" class="col-sm-offset-2 col-sm-2 control-label">身份证号</label>
+                                <label for="guest_id" class="col-sm-offset-2 col-sm-2 control-label">身份证号</label>
                                 <div class="col-sm-5">
-                                    <input type="password" class="form-control" name="guest_id" placeholder="输入身份证">
+                                    <input type="text" class="form-control" id="guest_id" placeholder="输入身份证">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="col-sm-offset-2 col-sm-2 control-label">联系方式</label>
+                                <label for="guest_num" class="col-sm-offset-2 col-sm-2 control-label">联系方式</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="guest_num" placeholder="输入手机号">
+                                    <input type="text" class="form-control" id="guest_num" placeholder="输入手机号">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-5">
-                                    <button id="form_gusetinfo" type="submit" class="btn btn-default btn-block btn-primary">录入</button>
+                                    <button id="form_gusetinfo" class="btn btn-default btn-block btn-primary">录入</button>
                                 </div>
                             </div>
                         </form>
@@ -239,18 +242,14 @@
             <!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
     <script type="text/javascript">
         $(function(){
+        
             $("#movein").click(function(){
                 $('#movein_').modal('show'); //显示模态框
             })
             
-            $("#init").click(function(){
-                $('.jumbotron').hide(); 
-                $('#choose').hide();
-                $('#room').show();  
-            })
-
             $("#continue").click(function(){
                 $('.jumbotron').hide();
                 $('#room_continue').show();
@@ -301,29 +300,6 @@
                 $('#movein_').modal('hide'); 
                 $('.jumbotron').hide();
                 $('#president').show();
-            })
-
-
-            $(".submit").click(function(){
-                var rows = find('input[type=checkbox][name=test]:checked');
-                for (var i = 0; i < rows.length; i++) 
-                {
-                 row[i] = rows[i].getAttribute('room_id')
-                }
-                $.ajax({
-                type:"post",
-                dataType:"json",
-                data:{type:"3",list:row},
-                success:function(res){
-                    console.log(res)
-                    console.log(0)
-
-                },
-                error:function (res) {
-                    console.log(res);
-                    console.log(1)
-                }
-                });
             })
 
             $("#form_gusetinfo").click(function(){
@@ -380,7 +356,6 @@
                 }}
                 });
             })
-
         });
     </script>
 </body>

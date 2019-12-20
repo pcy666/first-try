@@ -79,7 +79,7 @@
                         <tbody>
                             <tr>
                                 <td>单人房</td>
-                                <td>{{Single}}</td>
+                                <td>{{single}}</td>
                                 <td><a class='change' name="1" onclick="ChangePrice(this)">更改价格</a></td>
                             </tr>
                             <tr>
@@ -129,9 +129,11 @@
                             </tr>
                             <tbody>
                                 <tr>
-                                    <td>{{ZhangHao}}</td>
-                                    <td>{{Mima}}</td>
-                                    <td><a class='del' name="1" onclick="DelKey(this)">删除账号</a>/<a class='change' name="1" onclick="ChangeKey(this)">修改密码</a></td>
+                                    {% for k in staff %}
+                                    <td>{{k[0]}}</td>
+                                    <td>{{k[1]}}</td>
+                                    <td><a class='del' name="{{k[0]}}" onclick="DelKey(this)">删除账号</a>/<a class='change' name="{{k[0]}}" onclick="ChangeKey(this)">修改密码</a></td>
+                                    {% endfor %}
                                 </tr>
                             </tbody>
                         </thead>
@@ -181,13 +183,19 @@
         }
 
         function DelKey(that){
-            $.post("/admin",
-            {
-            type:"3",
-            num:$(that).attr("name")
-            });
-            alter("3")
-
+            var type=$("#type").attr("value",2);
+            var num=$(that).attr("name");
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{type:type,num:num}
+                });
+            // $.post(
+            // {
+            // type:"3",
+            // num:$(that).attr("name")
+            // });
+            // alter("3")
         }
 
         function uploadprice(){
@@ -195,7 +203,6 @@
             var num=$("#num").val();
             var price=$("#newprice").val();
             $.ajax({
-                url:"/admin",
                 type:"post",
                 dataType:"json",
                 data:{type:type,num:num,price:price}
@@ -209,7 +216,6 @@
             var num=$("#num").val();
             var newkey=$("#newkey").val();
             $.ajax({
-                url:"/admin",
                 type:"post",
                 dataType:"json",
                 data:{type:type,num:num,newkey:newkey}
@@ -223,7 +229,6 @@
             var uname=$("#uname").val();
             var psw=$("#psw").val();
             $.ajax({
-                url:"/admin",
                 type:"post",
                 dataType:"json",
                 data:{type:type,uname:uname,psw:psw}
