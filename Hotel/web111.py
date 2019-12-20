@@ -1,10 +1,16 @@
 from flask import Flask
 from flask import request
 from flask import render_template
-from flask import redirect,url_for
+from flask import redirect,url_for,jsonify
+import datetime
 import db
+import json
 
 app = Flask(__name__)
+
+name = ''
+id = ''
+num = ''
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -17,15 +23,14 @@ def home():
         if pwd == db.dbsearch('staff','id',uname)[0][1]:  #判断是否和数据库中的密码一致
             #判断管理员登录
             if way == 'admin':
-                return redirect(url_for('admin',id = uname))
+                return redirect(url_for('admin'))
             elif way == 'admin_':
-                return redirect(url_for('signin',id = uname))
+                return redirect(url_for('signin'))
         else:
             return render_template('index.html')
 
-#普通员工管理网页
-@app.route('/signin/<id>', methods=['GET','POST'])
-def signin(id):
+@app.route('/signin', methods=['GET','POST'])
+def signin():
     #存储可用房间的列表
     single = []
     double = []
@@ -52,34 +57,20 @@ def signin(id):
         if s[2] == 0:
             president.append(s)
 
-    if request.method == 'POST':
-        type = request.values.get('type')
-        if type == '2':
-            # 需要从request对象读取表单内容：
-            list = request.get_data()
-            name = request.values.get('name')
-            id = request.values.get('id')
-            num = request.values.get('num')
-            value = (name,id,num)
-            db.dbinsert('clients',value)
+    if request.method == 'GET':
+        return render_template('signin.html',single = single, double = double,luxury = luxury,suite = suite,high = high,president = president)
 
-            return render_template('signin.html',single = single, double = double,luxury = luxury,suite = suite,high = high,president = president)
-        elif type == '4':  #续住
-            room_id = request.values.get('roomid')
-            days = request.values.get('days')
+    elif request.method == 'POST':
+        # 需要从request对象读取表单内容：
+        name = request.values.get('name')
+        id = request.values.get('id')
+        num = request.values.get('num')
+        value = (name,id,num)
+        db.dbinsert('clients',value)
+        return render_template('signin.html',single = single, double = double,luxury = luxury,suite = suite,high = high,president = president)
 
-        elif type == '5':  #房间查询
-            room_id = request.values.get('roomid')
-        elif type == '6':  #退房
-            room_id = request.values.get('roomid')
-        else:
-            return render_template('signin.html',single = single, double = double,luxury = luxury,suite = suite,high = high,president = president)
-    elif request.method == 'GET':
-        return render_template('signin(1).html',single = single, double = double,luxury = luxury,suite = suite,high = high,president = president)
-    
-#管理员网页
-@app.route('/admin/<id>',methods=['GET','POST'])
-def admin(id):
+@app.route('/admin/',methods=['GET','POST'])
+def admin():
     if request.method == 'GET':
         single = db.dbsearch('room','type','单人间')[0][1]
         double = db.dbsearch('room','type','双人间')[0][1]
@@ -114,10 +105,67 @@ def admin(id):
             db.dbchangeOneNum('staff','id',num,'pwd',newkey)
         elif type == '3': #删除管理员账户
             db.dbDelete('staff','id',uname)
+        return render_template('admin.html')
 
 @app.route('/ChooseRoom',methods=['POST'])
 def ChooseRoom():
-    return render_template('index.html')
+    a = request.get_data()
 
-if __name__ == '__main__':
+    print(a)
+    return "恭喜入住成功,祝旅途愉快"
+
+@app.route('/guestinfo',methods=['POST'])
+def guestinfo():
+    global name,id,num
+    name = request.values.get('name')
+    id = request.values.get('id')
+    num = request.values.get('num')
+    value = (name,id,num)
+    db.dbinsert('clients',value)
+    print(name,id,num)
+    return('提交数据成功')
+
+@app.route('/continue',methods=['POST'])
+def livelonger():
+    room_id = request.values.get('roomid')
+    days = request.values.get('days')
+    room = db.dbsearch('cl_in_room','room_id',room_id)
+    if room[0][5] == '':
+        room[0][5] = datetime.datetime.today()
+    time = room[0][5] + datetime.timedelta(int(days))
+    db.dbchangeOneNum('cl_in_room','room_id',room_id,'time_out',time)
+    print(room_id,days)
+    return('提交数据成功')
+
+@app.route('/checkout',methods=['POST'])
+def checkout():
+    room_id = request.values.get('roomid')
+    room = db.dbsearch('cl_in_room','room_id',room_id)
+    flag = db.dbsearch('room','room_id',room_id)
+    data={
+        'ddnum':room[0][0],
+        'idnum':room[0][1],
+        'room_num':[0][2],
+        'reservetime':[0][3],
+        'moveintime':[0][4],
+        'checkouttime':[0][5],
+        'pay':flag[0][1]
+    }
+    db.dbDelete('cl_in_room','room_id',room_id)
+    return jsonify(data)
+
+@app.route('/search',methods=['POST'])
+def search():
+    room_id = request.values.get('roomid')
+    room = db.dbsearch('cl_in_room','room_id',room_id)
+    flag = db.dbsearch('room','room_id',room_id)
+    TimeIn = room[0][4]
+    TimeOut = room[0][5]
+    data = {'RoomNum':room_id,
+    'Flag' : flag,
+    'TimeIn': TimeIn,
+    'TimeOut' : TimeOut}
+    return jsonify(data)
+
+if __name__ == '__main__': 
     app.run()

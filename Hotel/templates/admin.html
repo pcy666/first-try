@@ -128,13 +128,13 @@
                                 <th>管理</th>
                             </tr>
                             <tbody>
+                                {% for k in staff %}
                                 <tr>
-                                    {% for k in staff %}
                                     <td>{{k[0]}}</td>
                                     <td>{{k[1]}}</td>
                                     <td><a class='del' name="{{k[0]}}" onclick="DelKey(this)">删除账号</a>/<a class='change' name="{{k[0]}}" onclick="ChangeKey(this)">修改密码</a></td>
-                                    {% endfor %}
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </thead>
                     </table>

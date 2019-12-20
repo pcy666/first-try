@@ -61,7 +61,7 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="jumbotron" id="room" style="display:none;">
+                <div class="jumbotron" id="room" style="display:block;">
                     <h3>
                         当前房间情况:
                     </h3>
@@ -95,6 +95,27 @@
                     <input id="searchroom" type="text" size="15" style="width:50px"/>
                     <br/>
                     <button id="search_upload" class="btn btn-default">确认</button>
+                    <div id="searchtable" style="display: none;">
+                        <table class="table table-striped">
+                            <caption>房间状态</caption>
+                            <thead>
+                                <tr>
+                                    <th>房间号</th>
+                                    <th>入住状态</th>
+                                    <th>入住时间</th>
+                                    <th>退房时间</th>
+                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td id="RoomNum">{{RoomNum}}</td>
+                                        <td id="Flag">{{Flag}}</td>
+                                        <td id="TimeIn">{{TimeIn}}</td>
+                                        <td id="TimeOut">{{TimeOut}}</td>
+                                    </tr>
+                                </tbody>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="jumbotron" id="room_checkout" style="display:none;">
@@ -105,9 +126,38 @@
                     <input id="checkoutroom" type="text" size="15" style="width:50px"/>
                     <br/>
                     <button id="checkout_upload" class="btn btn-default">确认</button>
+                    <div id = "continuetable" style="display: none;">
+                        <table class="table table-striped">
+                            <caption>订单详情</caption>
+                            <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>身份证</th>
+                                    <th>房间号</th>
+                                    <th>预定时间</th>
+                                    <th>入住时间</th>
+                                    <th>退房时间</th>
+                                    <th>应付金额</th>
+                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td id="ddnum">{{ddnum}}</td>
+                                        <td id="idnum">{{idnum}}</td>
+                                        <td id="room_num">{{room_num}}</td>
+                                        <td id="reservetime">{{reservetime}}</td>
+                                        <td id="moveintime">{{moveintime}}</td>
+                                        <td id="checkouttime">{{checkouttime}}</td>
+                                        <td id="pay">{{pay}}</td>
+                                    </tr>
+                                </tbody>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
 
-                <div class="right-block" style="width:0px;display: block;" id="choose">
+                
+
+                <div class="right-block" style="width:0px;display: none;" id="choose">
                     <div class="dropdown">
                         <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">请选择房间类型
                             <span class="caret"></span>
@@ -139,9 +189,11 @@
                     <div>
                         <p>可用单人间</p>
                         {% for index in single %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -149,9 +201,11 @@
                     <div>
                         <p>可用双人间</p>
                         {% for index in double %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -159,9 +213,11 @@
                     <div>
                         <p>可用豪华间</p>
                         {% for index in luxury %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -169,9 +225,11 @@
                     <div>
                         <p>可用套间</p>
                         {% for index in suite %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -179,9 +237,11 @@
                     <div>
                         <p>可用高级套间</p>
                         {% for index in high %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -189,9 +249,11 @@
                     <div>
                         <p>可用总统套房</p>
                         {% for index in president %}
-                            <label><input type="checkbox" name="test" room_id="{{index[0][0]}}"/><span>{{index[0]}}</span></label>
+                            <label><input type="checkbox" name="test" value="{{index[0]}}"/><span>{{index[0]}}</span></label>
                         {% endfor %}
-                        <!-- {{single}} -->
+                        <br/>
+                        <label>输入入住天数</label>
+                        <input class="livedays" type="text">
                         <button class="submit">提交</button>
                     </div>
                 </div>
@@ -207,31 +269,29 @@
                 <div class="modal-body">
                         <h4 class="modal-title" align="center">入住登记</h4>
                         <br/>
-                        <form class="form-horizontal" role="form" method="post">
                             <div class="form-group">
                                 <label for="name" class="col-sm-offset-2 col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="guest_name" placeholder="输入姓名">
+                                    <input type="text" class="form-control" id="guest_name" placeholder="输入姓名">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-sm-offset-2 col-sm-2 control-label">身份证号</label>
                                 <div class="col-sm-5">
-                                    <input type="password" class="form-control" name="guest_id" placeholder="输入身份证">
+                                    <input type="password" class="form-control" id="guest_id" placeholder="输入身份证">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="col-sm-offset-2 col-sm-2 control-label">联系方式</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="guest_num" placeholder="输入手机号">
+                                    <input type="text" class="form-control" id="guest_num" placeholder="输入手机号">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-5">
-                                    <button id="form_gusetinfo" type="submit" class="btn btn-default btn-block btn-primary">录入</button>
+                                    <button id="form_gusetinfo" class="btn btn-default btn-block btn-primary">录入</button>
                                 </div>
                             </div>
-                        </form>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -254,22 +314,43 @@
             $("#continue").click(function(){
                 $('.jumbotron').hide();
                 $('#room_continue').show();
+                $('#choose').hide();
             })
 
             $("#checkout").click(function(){
                 $('.jumbotron').hide();
                 $('#room_checkout').show();
+                $('#choose').hide();
             })
 
             $("#roomsearch").click(function(){
                 $('.jumbotron').hide();
                 $('#room_search').show();
+                $('#choose').hide();
             })
 
             $("#form_gusetinfo").click(function(){
-                $('#movein_').modal('hide'); //隐藏模态框
-                $('.jumbotron').hide();
-                $('#choose').show();
+                // $('#movein_').modal('hide'); //隐藏模态框
+                // $('.jumbotron').hide();
+                // $('#choose').show();
+                var name = $('#guest_name').val();
+                var id = $('#guest_id').val();
+                var num = $('#guest_num').val();
+                $.ajax({
+                type:"post",
+                dataType:"text",
+                url:"/guestinfo",
+                data:{name:name,id:id,num:num},
+                success:function(res){
+                    alert(res)
+                    $('#movein_').modal('hide'); //隐藏模态框
+                    $('.jumbotron').hide();
+                    $('#choose').show();
+                },
+                error:function (res) {
+                    alert('失败')
+                }
+                });
             })
             
             $("#single_").click(function(){
@@ -305,83 +386,86 @@
 
 
             $(".submit").click(function(){
-                var rows = find('input[type=checkbox][name=test]:checked');
-                for (var i = 0; i < rows.length; i++) 
-                {
-                 row[i] = rows[i].getAttribute('room_id')
-                }
+                var ids= new Array();
+                $("input[type='checkbox']:checkbox:checked").each(function(i,d){
+                ids.push(d.value); 
+                });
+                alert(ids.length)
+                var days = $('.livedays').val();
+                alert(days)
+                d = {list:ids,days:days}
                 $.ajax({
                 type:"post",
-                dataType:"json",
-                data:{type:"3",list:row},
+                url:"/ChooseRoom",
+                contentType: "application/json; charset=utf-8",
+                dataType:"text",
+                data:JSON.stringify(d),
                 success:function(res){
-                    console.log(res)
-                    console.log(0)
-
+                    alert(res)
                 },
                 error:function (res) {
-                    console.log(res);
-                    console.log(1)
+                    alert('失败')
                 }
-                });
-            })
-
-            $("#form_gusetinfo").click(function(){
-                var name = $('#guest_name').val();
-                var id = $('#guest_id').val();
-                var num = $('guest_num').val();
-                var type = "2";
-                $.ajax({
-                type:"post",
-                dataType:"json",
-                data:{type:type,name:name,id:id,num:num}
                 });
             })
 
             $("#continue_upload").click(function(){
-                var type = "4"
                 var roomid = $('#continueroom').val();
                 var days = $('#continuedays').val();
                 $.ajax({
                 type:"post",
-                dataType:"json",
-                data:{type:type,roomid:roomid,days:days},
+                dataType:"text",
+                url:"/continue",
+                data:{roomid:roomid,days:days},
                 success: function (result) {
-                if (result.resultCode == 200) {
-                    alert("SUCCESS");
-                }}
+                    alert(result)
+                },
+                error:function(result){
+                    alert('失败')
+                }
                 });
             })
 
             $("#search_upload").click(function(){
-                var type = "5"
+                alert('111')
                 var roomid = $('#searchroom').val();
                 $.ajax({
                 type:"post",
+                url:'/search',
                 dataType:"json",
-                data:{type:type,roomid:roomid},
+                data:{roomid:roomid},
                 success: function (result) {
-                if (result.resultCode == 200) {
-                    alert("SUCCESS");
-                }}
+                    $("#RoomNum").html(result['RoomNum']);
+                    $("#Flag").html(result['Flag']);
+                    $("#TimeIn").html(result['TimeIn']);
+                    $("#TimeOut").html(result['TimeOut']);
+                }
                 });
+                $('#searchtable').show();
             })
 
             $("#checkout_upload").click(function(){
-                var type = "6"
                 var roomid = $('#checkoutroom').val();
                 $.ajax({
                 type:"post",
                 dataType:"json",
-                data:{type:type,roomid:roomid},
+                url:"/checkout",
+                data:{roomid:roomid},
                 success: function (result) {
-                if (result.resultCode == 200) {
-                    alert("SUCCESS");
-                }}
+                    $("#ddnum").html(result['ddnum']);
+                    $("#idnum").html(result['idnum']);
+                    $("#room_num").html(result['room_num']);
+                    $("#reservetime").html(result['reservetime']);
+                    $("#moveintime").html(result['moveintime']);
+                    $("#checkouttime").html(result['checkouttime']);
+                    $("#pay").html(result['pay']);
+                }
                 });
+                $('#continuetable').show();
             })
 
         });
     </script>
 </body>
+
 
